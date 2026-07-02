@@ -406,9 +406,13 @@ function makeTable(container, title, dataDict, valFn, filterCat) {
 
     if (filterCat) {
       row.addEventListener('click', () => {
-        if (!activeFilters[filterCat].includes(name)) {
-          activeFilters[filterCat].push(name);
-        }
+        activeFilters = { game: [], video: [], mode: [], gameplayer: [], map: [], player: [], clan: [] };
+        searchQuery = '';
+        document.getElementById('main-search').value = '';
+        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+        
+        activeFilters[filterCat].push(name);
+        
         updateActiveFilterBar();
         document.querySelector('.nav-btn[data-tab="videos"]').click();
         renderVideos();
