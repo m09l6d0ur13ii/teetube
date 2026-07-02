@@ -1,3 +1,33 @@
+/* 
+ * TEE TUBE - MAIN WEBSITE LOGIC (index.js)
+ * 
+ * Hello! If you are reading this and want to understand how the website works without AI, here is the breakdown:
+ * 
+ * 1. HOW IT STARTS (INIT): 
+ *    When the page loads (DOMContentLoaded), we initialize the tabs, search bar, and modals.
+ *    Then, we call `loadDatabase()`.
+ * 
+ * 2. LOADING THE DATABASE (loadDatabase):
+ *    We fetch the global database from GitHub via jsDelivr CDN (`DB_URL`).
+ *    We save it into the `allVideos` variable.
+ *    Then we extract all unique maps, players, and clans from the videos to build the sidebar filters (`extractDynamicFilters`).
+ *    Finally, we render the videos onto the screen (`renderVideos`) and generate the leaderboards (`renderLeaderboards`).
+ * 
+ * 3. FILTERING & SEARCHING (renderVideos):
+ *    Whenever you type in the search bar or click a filter in the sidebar, we re-run `renderVideos()`.
+ *    It loops through `allVideos`, checks if a video matches the active filters and your search query.
+ *    If it matches, it gets sorted (by newest, oldest, most views, or most likes) and displayed on the grid!
+ * 
+ * 4. LEADERBOARDS (renderLeaderboards):
+ *    This loops through all videos and counts how many videos each player, clan, and map has.
+ *    It sorts them from highest to lowest and displays them in the Leaderboard tab.
+ * 
+ * 5. VIDEO MODAL (openModal):
+ *    When you click a video card, it opens a popup (modal). We embed the YouTube iframe there and show the tags!
+ * 
+ * Have fun coding!
+ */
+
 // ===== CONFIG =====
 const DB_URL = 'https://cdn.jsdelivr.net/gh/m09l6d0ur13ii/teetube-db@main/database.json';
 
