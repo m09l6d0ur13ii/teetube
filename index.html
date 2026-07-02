@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TeeTube — DDNet Video Tracker</title>
+  <meta name="description" content="The community-curated database of DDNet & Teeworlds YouTube videos. Browse by map, player, clan, and game mode.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <div class="logo-icon">🎮</div>
+        <div>
+          <h1 class="logo-title">TeeTube</h1>
+          <p class="logo-sub">DDNet Video DB</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="videos">📺 Videos</button>
+        <button class="nav-btn" data-tab="leaderboards">🏆 Leaderboards</button>
+        <button class="nav-btn" data-tab="about">ℹ️ About</button>
+      </nav>
+
+      <div class="sidebar-filters" id="sidebar-filters">
+        <div class="filter-section">
+          <label class="filter-label">Game</label>
+          <div class="filter-tags" id="f-game"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Video Type</label>
+          <div class="filter-tags" id="f-video"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Mode</label>
+          <div class="filter-tags" id="f-mode"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Player Type</label>
+          <div class="filter-tags" id="f-gameplayer"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Map</label>
+          <input class="filter-search" id="search-map" placeholder="Search map...">
+          <div class="filter-tags scrollable" id="f-map"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Player</label>
+          <input class="filter-search" id="search-player" placeholder="Search player...">
+          <div class="filter-tags scrollable" id="f-player"></div>
+        </div>
+        <div class="filter-section">
+          <label class="filter-label">Clan</label>
+          <input class="filter-search" id="search-clan" placeholder="Search clan...">
+          <div class="filter-tags scrollable" id="f-clan"></div>
+        </div>
+
+        <button class="clear-filters-btn" id="clear-filters-btn">✕ Clear All Filters</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+      <!-- Header -->
+      <header class="topbar">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="main-search" placeholder="Search videos, authors..." autocomplete="off">
+        </div>
+        <div class="topbar-right">
+          <select id="sort-select">
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+            <option value="views">Most Views</option>
+            <option value="likes">Most Likes</option>
+          </select>
+          <div class="db-status" id="db-status">
+            <span class="status-dot loading"></span>
+            <span id="status-text">Loading...</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Active filters bar -->
+      <div class="active-filter-bar" id="active-filter-bar" style="display:none;">
+        <span>Filters:</span>
+        <div id="active-filter-chips"></div>
+        <button id="clear-all-btn">Clear all ✕</button>
+      </div>
+
+      <!-- Videos tab -->
+      <section class="tab-content active" id="tab-videos">
+        <div class="section-header">
+          <h2>All Videos <span class="count-badge" id="count-badge">0</span></h2>
+          <div class="extension-cta">
+            <a href="https://github.com/m09l6d0ur13ii/teetube-extension" target="_blank" class="cta-btn">
+              ⚡ Get Extension
+            </a>
+          </div>
+        </div>
+        <div class="video-grid" id="video-grid">
+          <div class="loading-grid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leaderboards tab -->
+      <section class="tab-content" id="tab-leaderboards">
+        <div class="section-header">
+          <h2>🏆 Leaderboards</h2>
+        </div>
+        <div class="leaderboards-grid" id="leaderboards-grid"></div>
+      </section>
+
+      <!-- About tab -->
+      <section class="tab-content" id="tab-about">
+        <div class="about-content">
+          <div class="about-hero">
+            <div class="about-logo">🎮</div>
+            <h2>TeeTube</h2>
+            <p class="about-desc">The community-curated video database for the DDNet & Teeworlds universe. Every video is hand-tagged by moderators so you can find exactly what you're looking for.</p>
+          </div>
+          <div class="about-cards">
+            <div class="about-card">
+              <div class="about-card-icon">🔖</div>
+              <h3>Tagged by Mods</h3>
+              <p>Every video is reviewed and tagged by community moderators — game mode, map, players, and more.</p>
+            </div>
+            <div class="about-card">
+              <div class="about-card-icon">⚡</div>
+              <h3>Chrome Extension</h3>
+              <p>Install the TeeTube extension to see tags and badges directly on YouTube while you browse.</p>
+            </div>
+            <div class="about-card">
+              <div class="about-card-icon">🌐</div>
+              <h3>Open Source</h3>
+              <p>The database and extension are fully open source. Anyone can see exactly how it works.</p>
+            </div>
+          </div>
+          <div class="about-links">
+            <a href="https://github.com/m09l6d0ur13ii/teetube-extension" target="_blank" class="about-link">Extension on GitHub →</a>
+            <a href="https://github.com/m09l6d0ur13ii/teetube" target="_blank" class="about-link">Database on GitHub →</a>
+            <a href="https://ddnet.org" target="_blank" class="about-link">DDNet →</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Video detail modal -->
+  <div class="modal-overlay" id="video-modal" style="display:none;">
+    <div class="modal-box" id="modal-box">
+      <button class="modal-close" id="modal-close">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
