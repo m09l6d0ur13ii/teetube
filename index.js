@@ -66,14 +66,25 @@ async function loadDatabase() {
     const db = await res.json();
     allVideos = db.videos || {};
     extractDynamicFilters();
+    applyUrlFilters();
     initFilters();
     renderVideos();
     renderLeaderboards();
+    updateActiveFilterBar();
     setStatus('ok', `${Object.keys(allVideos).length} videos`);
   } catch (e) {
     setStatus('error', 'Failed to load');
     document.getElementById('video-grid').innerHTML =
       `<div class="empty-state"><strong>Could not load database</strong>Check your connection or try again later.</div>`;
+  }
+}
+
+function applyUrlFilters() {
+  const params = new URLSearchParams(window.location.search);
+  for (const [key, value] of params.entries()) {
+    if (activeFilters[key] && !activeFilters[key].includes(value)) {
+      activeFilters[key].push(value);
+    }
   }
 }
 
