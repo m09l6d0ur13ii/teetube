@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadDatabase() {
   setStatus('loading', 'Loading...');
   try {
-    const res = await fetch(DB_URL + '?_=' + Date.now());
+    const res = await fetch(DB_URL, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const db = await res.json();
     allVideos = db.videos || {};
