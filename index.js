@@ -310,8 +310,8 @@ function renderVideos() {
         <div class="card-title"></div>
         <div class="card-author"></div>
         <div class="card-meta">
-          ${v.views ? `<span>👁 ${esc(v.views)}</span>` : ''}
-          ${v.likes ? `<span>👍 ${esc(v.likes)}</span>` : ''}
+          ${v.views !== undefined && v.views !== null && v.views !== 0 ? `<span>👁 ${esc(fmtNum(v.views))}</span>` : ''}
+          ${v.likes !== undefined && v.likes !== null && v.likes !== 0 ? `<span>👍 ${esc(fmtNum(v.likes))}</span>` : ''}
           ${dateStr  ? `<span>📅 ${esc(dateStr)}</span>`  : ''}
         </div>
         <div class="card-tags">${tagsHtml}</div>
@@ -362,8 +362,8 @@ function openModal(id, v) {
 
   body.innerHTML = `
     <div class="modal-meta">
-      ${v.views  ? `<span>👁 ${esc(v.views)}</span>`   : ''}
-      ${v.likes  ? `<span>👍 ${esc(v.likes)}</span>`   : ''}
+      ${v.views !== undefined && v.views !== null && v.views !== 0 ? `<span>👁 ${esc(fmtNum(v.views))}</span>` : ''}
+      ${v.likes !== undefined && v.likes !== null && v.likes !== 0 ? `<span>👍 ${esc(fmtNum(v.likes))}</span>` : ''}
       ${dateStr   ? `<span>📅 ${esc(dateStr)}</span>`   : ''}
       ${v.addedBy ? `<span>✅ by ${esc(v.addedBy)}</span>` : ''}
     </div>
@@ -404,8 +404,6 @@ function renderLeaderboards() {
     (v.maps  || []).forEach(m => stats.maps[m]  = (stats.maps[m]  || 0) + 1);
     (v.clans || []).forEach(c => stats.clans[c] = (stats.clans[c] || 0) + 1);
   });
-
-  const fmtNum = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n.toString();
 
   makeTable(container, '👤 Top Players (Videos)', stats.byVideos, v => `${v} pts`, 'player');
   makeTable(container, '👁 Top Players (Views)',  stats.byViews,  v => fmtNum(v) + ' views', 'player');
@@ -458,6 +456,12 @@ function makeTable(container, title, dataDict, valFn, filterCat) {
 }
 
 // ===== UTILS =====
+function fmtNum(n) {
+  if (!n) return '0';
+  const num = typeof n === 'string' ? parseNum(n) : n;
+  return num >= 1e6 ? (num/1e6).toFixed(1)+'M' : num >= 1e3 ? (num/1e3).toFixed(1)+'K' : num.toString();
+}
+
 function esc(str) {
   return String(str)
     .replace(/&/g, '&amp;')
