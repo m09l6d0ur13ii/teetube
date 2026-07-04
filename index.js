@@ -32,10 +32,11 @@
 const DB_URL = 'https://cdn.jsdelivr.net/gh/m09l6d0ur13ii/teetube-db@main/database.json';
 
 const CATEGORIES = {
-  game:       ['ddnet', 'teeworlds', 'ddper'],
-  video:      ['moment', 'montage', 'прохождение', 'speedrun', 't0speedrun', 'tutorial', 'trailer', 'skips', 'fun', 'meme', 'other'],
-  mode:       ['ddrace', 'ctf', 'dm', 'race', 'fng', 'gores', 'block', 'other mods'],
-  gameplayer: ['real', 'tas']
+  game: ["ddnet", "teeworlds", "ddper"],
+  video: ["moment", "montage", "playthrough", "speedrun", "t0speedrun", "tutorial", "trailer", "skips", "animation", "gameplay", "tournament", "match", "podcast", "fun", "meme", "other"],
+  mode: ["DDRace", "Gores", "fng", "F-DDrace", "Race", "Block", "BOMB", "CTF", "TB", "TeeWare", "InfClass", "Monster", "zCatch", "Foot", "DM", "Soup", "AXRace", "Sheep", "Battle", "Training", "other mods"],
+  gameplayer: ["real", "tas", "dummy"],
+  lang: ["ru", "en", "zh", "other"]
 };
 
 // ===== STATE =====
@@ -358,6 +359,7 @@ function openModal(id, v) {
 
   const body = document.createElement('div');
   body.className = 'modal-body';
+
   body.innerHTML = `
     <div class="modal-meta">
       ${v.views  ? `<span>👁 ${esc(v.views)}</span>`   : ''}
